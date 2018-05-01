@@ -26,3 +26,11 @@ void MainWindow::on_actionOpen_triggered()
     imageEditor = std::make_shared<ImageEditor>(fileName.toStdString(), this);
     ui->scrollArea->setWidget(imageEditor.get());
 }
+
+void MainWindow::on_actionSave_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Open Image"), "", tr("Image Files (*.png)"));
+    cv::Mat segmentation = imageEditor->getSegmentation();
+    cv::imwrite(fileName.toStdString(), segmentation);
+}
